@@ -45,5 +45,16 @@ module.exports = {
     } else {
       throw new NotStringException()
     }
+  },
+  delete: (key) => {
+    if (typeof (key) === 'string') {
+      if (storage[key]) {
+        delete storage[key]
+      } else {
+        throw new KeyNotExistException()
+      }
+    } else {
+      throw new NotStringException()
+    }
   }
 }
