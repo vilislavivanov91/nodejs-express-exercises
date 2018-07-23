@@ -1,5 +1,6 @@
 const NotStringException = require('./exceptions/not-string')
 const KeyNotExistException = require('./exceptions/key-not-exist')
+const isEmpty = require('./utility/obj-is-empty')
 const storage = {}
 
 module.exports = {
@@ -23,6 +24,15 @@ module.exports = {
       }
     } else {
       throw new NotStringException()
+    }
+  },
+  getAll: () => {
+    if (isEmpty(storage)) {
+      console.log('Storage is empty')
+      return {}
+    } else {
+      const clonedStorage = JSON.parse(JSON.stringify(storage))
+      return clonedStorage
     }
   }
 }

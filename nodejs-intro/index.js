@@ -1,4 +1,5 @@
 const storage = require('./storage')
 
 storage.put('test', 1)
-console.log(storage.get('test'))
+storage.put('test1', 11)
+console.log(storage.getAll())
