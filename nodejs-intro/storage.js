@@ -62,12 +62,29 @@ module.exports = {
     storage = {}
   },
   save: () => {
-    fs.writeFile('storage.json', JSON.stringify(storage), err => {
-      if (err) {
-        console.log('Error during saving storage')
-      } else {
-        console.log('Storage saved in storage.json')
-      }
-    })
+    // fs.writeFile('storage.json', JSON.stringify(storage), err => {
+    //   if (err) {
+    //     console.log('Error during saving storage')
+    //   } else {
+    //     console.log('Storage saved in storage.json')
+    //   }
+    // })
+
+    fs.writeFileSync('storage.json', JSON.stringify(storage))
+  },
+  load: () => {
+    // fs.readFile('storage.json', 'utf-8', (err, data) => {
+    //   if (err) {
+    //     return console.log(err)
+    //   }
+    //   storage = JSON.parse(data)
+    // })
+
+    const file = fs.readFileSync('storage.json', 'utf-8')
+    if (file) {
+      storage = file
+    } else {
+      console.log('To use load from storage you shoud first save the storage!')
+    }
   }
 }
