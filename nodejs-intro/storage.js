@@ -1,7 +1,8 @@
+const fs = require('fs')
 const NotStringException = require('./exceptions/not-string')
 const KeyNotExistException = require('./exceptions/key-not-exist')
 const isEmpty = require('./utility/obj-is-empty')
-const storage = {}
+let storage = {}
 
 module.exports = {
   put: (key, value) => {
@@ -56,5 +57,17 @@ module.exports = {
     } else {
       throw new NotStringException()
     }
+  },
+  clear: () => {
+    storage = {}
+  },
+  save: () => {
+    fs.writeFile('storage.json', JSON.stringify(storage), err => {
+      if (err) {
+        console.log('Error during saving storage')
+      } else {
+        console.log('Storage saved in storage.json')
+      }
+    })
   }
 }
