@@ -1,4 +1,5 @@
 const NotStringException = require('./exceptions/not-string')
+const KeyNotExistException = require('./exceptions/key-not-exist')
 const storage = {}
 
 module.exports = {
@@ -18,7 +19,7 @@ module.exports = {
       if (storage[key]) {
         return storage[key]
       } else {
-        // Throw not existing key
+        throw new KeyNotExistException()
       }
     } else {
       throw new NotStringException()
