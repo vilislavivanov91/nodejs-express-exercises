@@ -17,23 +17,30 @@ const getContentType = pathName => {
 
 http.createServer((req, res) => {
   const pathName = url.parse(req.url).pathname
-  console.log(pathName)
   if (req.method === 'GET' && pathName.startsWith('/public')) {
-    fs.readFile('.' + pathName, (err, data) => {
-      if (err) {
-        res.writeHead(200, {
-          'content-type': 'text/plain'
-        })
-        res.write('error')
-        res.end()
-      } else {
-        res.writeHead(200, {
-          'content-type': getContentType(pathName)
-        })
-        res.write(data)
-        res.end()
-      }
-    })
+    if (pathName.endsWith('.html') || pathName.endsWith('.js') || pathName.endsWith('.css') || pathName.endsWith('.ico')) {
+      fs.readFile('.' + pathName, (err, data) => {
+        if (err) {
+          res.writeHead(200, {
+            'content-type': 'text/plain'
+          })
+          res.write('error')
+          res.end()
+        } else {
+          res.writeHead(200, {
+            'content-type': getContentType(pathName)
+          })
+          res.write(data)
+          res.end()
+        }
+      })
+    } else {
+      res.writeHead(403, {
+        'content-type': 'text/plain'
+      })
+      res.write('Forbidden')
+      res.end()
+    }
   }
 }).listen(port, () => {
   console.log(`App up and running at localhost:${port}`)
