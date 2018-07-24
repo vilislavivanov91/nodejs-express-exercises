@@ -62,29 +62,44 @@ module.exports = {
     storage = {}
   },
   save: () => {
-    // fs.writeFile('storage.json', JSON.stringify(storage), err => {
-    //   if (err) {
-    //     console.log('Error during saving storage')
-    //   } else {
-    //     console.log('Storage saved in storage.json')
-    //   }
-    // })
-
-    fs.writeFileSync('storage.json', JSON.stringify(storage))
+    let promise = new Promise((resolve, reject) => {
+      fs.writeFile('storage.json', JSON.stringify(storage), err => {
+        if (err) {
+          return reject(err)
+        } else {
+          return resolve(storage)
+        }
+      })
+    })
+    return promise
+    // fs.writeFileSync('storage.json', JSON.stringify(storage))
   },
   load: () => {
-    // fs.readFile('storage.json', 'utf-8', (err, data) => {
-    //   if (err) {
-    //     return console.log(err)
-    //   }
+    const filePath = 'storage.json'
+    let promise = new Promise((resolve, reject) => {
+      fs.access(filePath, err => {
+        if (err) {
+          return reject(err)
+        } else {
+          fs.readFile(filePath, 'utf-8', (err, data) => {
+            if (err) {
+              return reject(err)
+            } else {
+              storage = JSON.parse(data)
+              return resolve(storage)
+            }
+          })
+        }
+      })
+    })
+    return promise
+    // const fileAccess = fs.existsSync(filePath)
+    // console.log(fileAccess)
+    // if (fileAccess) {
+    //   const data = fs.readFileSync(filePath, 'utf-8')
     //   storage = JSON.parse(data)
-    // })
-
-    const file = fs.readFileSync('storage.json', 'utf-8')
-    if (file) {
-      storage = file
-    } else {
-      console.log('To use load from storage you shoud first save the storage!')
-    }
+    // } else {
+    //   console.log('There is no data in storage yet!')
+    // }
   }
 }

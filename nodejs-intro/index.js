@@ -1,17 +1,25 @@
 const storage = require('./storage')
 
-storage.put('test', 1)
-storage.put('test1', 11)
-storage.put('test1212', 1000)
-
-storage.update('test1', 232333333)
-
+storage.load().then().catch()
+storage.put('first', 'firstValue')
+storage.put('second', 'secondValue')
+storage.put('third', 'thirdValue')
+storage.put('fouth', 'fourthValue')
+console.log(storage.get('first'))
 console.log(storage.getAll())
-
-storage.delete('test1212')
+storage.delete('second')
+storage.update('first', 'updatedFirst')
 storage.save()
-console.log(storage.getAll())
-storage.clear()
-console.log(storage.getAll())
+  .then(() => {
+    storage.clear()
+    console.log(storage.getAll())
+  })
+  .catch(err => {
+    console.log(err)
+  })
 storage.load()
-console.log(storage.getAll())
+  .then(() => {
+    console.log(storage.getAll())
+  }).catch(err => {
+    console.log(err)
+  })
