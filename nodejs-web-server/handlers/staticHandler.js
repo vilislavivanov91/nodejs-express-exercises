@@ -1,16 +1,5 @@
 const fs = require('fs')
-
-const getContentType = pathName => {
-  if (pathName.endsWith('.html')) {
-    return 'text/html'
-  } else if (pathName.endsWith('.js')) {
-    return 'application/json'
-  } else if (pathName.endsWith('.css')) {
-    return 'text/css'
-  } else if (pathName.endsWith('.ico')) {
-    return 'image/x-icon'
-  }
-}
+const getContentType = require('../utility/get-content-type')
 
 const staticHandler = (req, res) => {
   if (req.method === 'GET' && req.pathName.startsWith('/public')) {
