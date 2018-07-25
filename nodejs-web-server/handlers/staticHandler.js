@@ -20,12 +20,10 @@ const staticHandler = (req, res) => {
         }
       })
     } else {
-      res.writeHead(403, {
-        'content-type': 'text/plain'
-      })
-      res.write('Forbidden')
-      res.end()
+      return true
     }
+  } else {
+    return true
   }
 }
 
