@@ -1,4 +1,5 @@
 const fs = require('fs')
+const db = require('../data/db')
 
 const viewAllHandler = (req, res) => {
   if (req.method === 'GET' && req.pathName === '/memes/all') {
@@ -10,9 +11,18 @@ const viewAllHandler = (req, res) => {
         res.write('page not found')
         res.end()
       } else {
+        const allMemes = db.getAll()
+        let result = ''
+        allMemes.forEach(meme => {
+          result += `<div class="meme">
+          <a href="/getDetails?id=${meme.id}">
+          <img class="memePoster" src="${meme.memeSrc}"/>          
+ </div>`
+        })
         res.writeHead(200, {
           'content-type': 'text/html'
         })
+        data = data.replace('{{replaceMe}}', result)
         res.write(data)
         res.end()
       }
