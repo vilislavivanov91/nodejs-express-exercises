@@ -1,10 +1,12 @@
-const staticHandler = require('./staticHandler')
-const moviesHandler = require('./allMovies')
+const staticHandler = require('./static')
+const moviesHandler = require('./movies')
 const errorHandler = require('./error')
+const addMovieHandler = require('./add-movie')
 
 const handlers = [
-  moviesHandler,
   staticHandler,
+  moviesHandler,
+  addMovieHandler,
   errorHandler
 ]
 
