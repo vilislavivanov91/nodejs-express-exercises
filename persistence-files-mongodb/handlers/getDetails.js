@@ -1,8 +1,12 @@
 const fs = require('fs')
+const url = require('url')
+const db = require('../data/db')
 
 const getDetailsHandler = (req, res) => {
   if (req.method === 'GET' && req.pathName === '/getDetails') {
     fs.readFile('./views/getDetails.html', 'utf-8', (err, data) => {
+      const id = url.parse(req.url).query.split('=')[1]
+      console.log(id)
       if (err) {
         res.writeHead(404, {
           'content-type': 'text/plain'
@@ -10,17 +14,12 @@ const getDetailsHandler = (req, res) => {
         res.write('page not found')
         res.end()
       } else {
-        const targetedMeme = {
-          memeSrc: 'https://steemitimages.com/DQmYfiDGFmZsgkpq6XPE3WssU6CK9SagBUCHyWVZGmVxU3T/92bd51939ce6e27f773aee3516b2cd6f--happy-monday-its-monday.jpg',
-          title: 'test',
-          description: 'desc',
-          posterSrc: 'https://steemitimages.com/DQmYfiDGFmZsgkpq6XPE3WssU6CK9SagBUCHyWVZGmVxU3T/92bd51939ce6e27f773aee3516b2cd6f--happy-monday-its-monday.jpg'
-        }
+        const currentMeme = db.getMemeById(Number(id))
         const result = `<div class="content">
-    <img src="${targetedMeme.memeSrc}" alt=""/>
-    <h3>Title  ${targetedMeme.title}</h3>
-    <p> ${targetedMeme.description}</p>
-    <button><a href="${targetedMeme.posterSrc}">Download Meme</a></button>
+    <img src="${currentMeme.memeSrc}" alt=""/>
+    <h3>Title  ${currentMeme.title}</h3>
+    <p> ${currentMeme.description}</p>
+    <button><a href="${currentMeme.posterSrc}">Download Meme</a></button>
     </div>`
         data = data.replace('{{replaceMe}}', result)
         res.writeHead(200, {
