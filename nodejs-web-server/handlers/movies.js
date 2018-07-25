@@ -1,19 +1,5 @@
 const fs = require('fs')
-
-const data = [
-  {
-    movieUrl: 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/iqA5wZC1wDX7mRfF1uqr7Qpt3XT.png',
-    name: 'The Last Man'
-  },
-  {
-    movieUrl: 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/iqA5wZC1wDX7mRfF1uqr7Qpt3XT.png',
-    name: 'Harry Potter'
-  },
-  {
-    movieUrl: 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/iqA5wZC1wDX7mRfF1uqr7Qpt3XT.png',
-    name: 'Avatar'
-  }
-]
+const db = require('../data/database')
 
 const allMovies = (req, res) => {
   if (req.method === 'GET' && req.pathName === '/movies') {
@@ -34,8 +20,8 @@ const allMovies = (req, res) => {
               'content-type': 'text/html'
             })
             let replacedResult = ''
-            data.forEach(d => {
-              let templateMovieHtml = movieHtml.replace('{{movieUrl}}', d.movieUrl)
+            db.get().forEach(d => {
+              let templateMovieHtml = movieHtml.replace('{{movieUrl}}', d.url)
               replacedResult += templateMovieHtml
             })
             const moviesHtmlReplaced = allMoviesHtml.replace('{{movies}}', replacedResult)
