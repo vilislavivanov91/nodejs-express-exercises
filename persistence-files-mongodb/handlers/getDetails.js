@@ -1,7 +1,7 @@
 const fs = require('fs')
 
 const getDetailsHandler = (req, res) => {
-  if (req.method === 'GET' && req.pathName === '/details') {
+  if (req.method === 'GET' && req.pathName === '/getDetails') {
     fs.readFile('./views/getDetails.html', 'utf-8', (err, data) => {
       if (err) {
         res.writeHead(404, {
