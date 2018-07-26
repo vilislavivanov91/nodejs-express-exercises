@@ -14,10 +14,12 @@ const viewAllHandler = (req, res) => {
         const allMemes = db.getAll()
         let result = ''
         allMemes.forEach(meme => {
-          result += `<div class="meme">
-          <a href="/getDetails?id=${meme.id}">
-          <img class="memePoster" src=".${meme.memeSrc}"/>          
- </div>`
+          if (meme.privacy === 'public') {
+            result += `<div class="meme">
+            <a href="/getDetails?id=${meme.id}">
+            <img class="memePoster" src=".${meme.memeSrc}"/>          
+  </div>`
+          }
         })
         res.writeHead(200, {
           'content-type': 'text/html'

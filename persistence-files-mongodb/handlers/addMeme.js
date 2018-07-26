@@ -59,14 +59,16 @@ const addMemeHandler = (req, res) => {
         const meme = {
           id,
           title: fields.title,
+          privacy: fields.privacy,
           memeSrc,
           description: fields.description,
           dateStamp,
           posterSrc: `${memeName}.jpg`
         }
+        console.log(meme)
         db.addMeme(meme)
         res.writeHead(302, {
-          'Location': '/'
+          'Location': '/memes/all'
         })
         res.end()
       }
