@@ -1,6 +1,5 @@
 const homeHandler = (req, res) => {
   if (req.method === 'GET' && req.pathName === '/') {
-    console.log('here')
     res.writeHead(200, {
       'content-type': 'text/plain'
     })

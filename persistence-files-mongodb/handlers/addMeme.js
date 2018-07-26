@@ -32,7 +32,8 @@ const addMemeHandler = (req, res) => {
         const id = shortId.generate()
         const dateStamp = Date.now()
         const folderPath = `./public/memeStorage/${folderName}`
-        const memeSrc = `${folderPath}/${shortId.generate()}.jpg`
+        const memeName = shortId.generate()
+        const memeSrc = `${folderPath}/${memeName}.jpg`
 
         fs.access(folderPath, err => {
           if (err) {
@@ -60,9 +61,9 @@ const addMemeHandler = (req, res) => {
           title: fields.title,
           memeSrc,
           description: fields.description,
-          dateStamp
+          dateStamp,
+          posterSrc: `${memeName}.jpg`
         }
-        console.log(meme)
         db.addMeme(meme)
         res.writeHead(302, {
           'Location': '/'
