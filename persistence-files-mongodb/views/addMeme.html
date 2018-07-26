@@ -9,7 +9,12 @@
 </head>
 
 <body>
-    <h1>Add meme</h1>
+    <form action="/addMeme" method="post" enctype="multipart/form-data">
+        movie image<input type="file" name="image" id="image">
+        title <input type="text" name="title" id="title">
+        description<input type="text" name="description" id="description">
+        <input type="submit" value="Submit">
+    </form>
 </body>
 
 </html>
