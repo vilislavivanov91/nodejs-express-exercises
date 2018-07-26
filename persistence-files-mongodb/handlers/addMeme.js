@@ -1,5 +1,7 @@
 const fs = require('fs')
 const formidable = require('formidable')
+const shortId = require('shortid')
+const mkdirp = require('mkdirp')
 
 const addMemeHandler = (req, res) => {
   if (req.method === 'GET' && req.pathName === '/addMeme') {
@@ -24,8 +26,37 @@ const addMemeHandler = (req, res) => {
       if (err) {
         console.log(err)
       } else {
-        console.log(fields)
-        console.log(files)
+        const id = shortId.generate()
+        const dateStamp = Date.now()
+        const memeSrc = `./public/memeStorage/${shortId.generate()}.jpg`
+
+        fs.access('./public/memeStorage', err => {
+          if (err) {
+            mkdirp('./public/memeStorage', mkdirErr => {
+              if (mkdirErr) {
+                console.log(mkdirErr)
+              }
+              fs.rename(files.image.path, memeSrc, (err) => {
+                if (err) {
+                  console.log(err)
+                }
+              })
+            })
+          }
+        })
+
+        const meme = {
+          id,
+          title: fields.title,
+          memeSrc,
+          description: fields.description,
+          dateStamp
+        }
+        console.log(meme)
+        res.writeHead(302, {
+          'Location': '/'
+        })
+        res.end()
       }
     })
   } else {
