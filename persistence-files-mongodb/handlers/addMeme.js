@@ -42,6 +42,12 @@ const addMemeHandler = (req, res) => {
                 }
               })
             })
+          } else {
+            fs.rename(files.image.path, memeSrc, (err) => {
+              if (err) {
+                console.log(err)
+              }
+            })
           }
         })
 
