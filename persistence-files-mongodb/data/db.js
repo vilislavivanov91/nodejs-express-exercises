@@ -28,6 +28,7 @@ const allMemes = [
   //   title: 'fourth title'
   // }
 ]
+let countAddedMemes = 1000
 
 module.exports = {
   getAll: () => {
@@ -44,5 +45,9 @@ module.exports = {
   },
   addMeme: (meme) => {
     allMemes.push(meme)
+    countAddedMemes++
+  },
+  getMemesCount: () => {
+    return countAddedMemes
   }
 }

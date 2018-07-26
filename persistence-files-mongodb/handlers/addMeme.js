@@ -3,6 +3,7 @@ const formidable = require('formidable')
 const shortId = require('shortid')
 const mkdirp = require('mkdirp')
 const db = require('../data/db')
+const getFolderName = require('../utility/getFolderName')
 
 const addMemeHandler = (req, res) => {
   if (req.method === 'GET' && req.pathName === '/addMeme') {
@@ -27,13 +28,15 @@ const addMemeHandler = (req, res) => {
       if (err) {
         console.log(err)
       } else {
+        const folderName = getFolderName()
         const id = shortId.generate()
         const dateStamp = Date.now()
-        const memeSrc = `./public/memeStorage/${shortId.generate()}.jpg`
+        const folderPath = `./public/memeStorage/${folderName}`
+        const memeSrc = `${folderPath}/${shortId.generate()}.jpg`
 
-        fs.access('./public/memeStorage', err => {
+        fs.access(folderPath, err => {
           if (err) {
-            mkdirp('./public/memeStorage', mkdirErr => {
+            mkdirp(folderPath, mkdirErr => {
               if (mkdirErr) {
                 console.log(mkdirErr)
               }
