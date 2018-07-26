@@ -14,7 +14,7 @@ const getDetailsHandler = (req, res) => {
         res.write('page not found')
         res.end()
       } else {
-        const currentMeme = db.getMemeById(Number(id))
+        const currentMeme = db.getMemeById(id)
         const result = `<div class="content">
     <img src="${currentMeme.memeSrc}" alt=""/>
     <h3>Title  ${currentMeme.title}</h3>

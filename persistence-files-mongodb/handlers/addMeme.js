@@ -2,6 +2,7 @@ const fs = require('fs')
 const formidable = require('formidable')
 const shortId = require('shortid')
 const mkdirp = require('mkdirp')
+const db = require('../data/db')
 
 const addMemeHandler = (req, res) => {
   if (req.method === 'GET' && req.pathName === '/addMeme') {
@@ -59,6 +60,7 @@ const addMemeHandler = (req, res) => {
           dateStamp
         }
         console.log(meme)
+        db.addMeme(meme)
         res.writeHead(302, {
           'Location': '/'
         })

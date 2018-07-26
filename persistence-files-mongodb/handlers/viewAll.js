@@ -16,7 +16,7 @@ const viewAllHandler = (req, res) => {
         allMemes.forEach(meme => {
           result += `<div class="meme">
           <a href="/getDetails?id=${meme.id}">
-          <img class="memePoster" src="${meme.memeSrc}"/>          
+          <img class="memePoster" src=".${meme.memeSrc}"/>          
  </div>`
         })
         res.writeHead(200, {
