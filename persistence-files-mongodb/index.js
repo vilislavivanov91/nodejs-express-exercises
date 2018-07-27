@@ -3,6 +3,8 @@ const handlers = require('./handlers')
 // const MongoClient = require('mongodb').MongoClient
 const mongoose = require('mongoose')
 const url = require('url')
+const Image = require('./model/Image')
+const Tag = require('./model/Tag')
 const port = 4242
 const mongoUrl = 'mongodb://localhost:27017/mongooseTest'
 
@@ -22,6 +24,15 @@ db.on('error', () => {
 })
 db.once('open', () => {
   console.log('connected!')
+  const newTag = new Tag({name: 'UPPERCASE'})
+  newTag.tagNameToLower()
+  newTag.save(err => {
+    if (err) {
+      console.log('err')
+    } else {
+      console.log('tag saved')
+    }
+  })
 })
 
 http.createServer((req, res) => {
