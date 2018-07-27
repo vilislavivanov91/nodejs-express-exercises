@@ -27,7 +27,6 @@ const createImageHandler = (req, res) => {
         res.end(err)
       } else {
         const tags = fields.imageTags.split(', ')
-        console.log(tags)
         const image = new Image({
           url: fields.imageUrl,
           description: fields.imageDescription,

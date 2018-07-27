@@ -8,6 +8,7 @@ const tagsHandler = require('./tags')
 const createImageHandler = require('./createImage')
 const resultsHandler = require('./results')
 const downloadMemeHandler = require('./downloadMeme')
+const deleteImageHandler = require('./deleteImage')
 const errorHandler = require('./error')
 
 const handlers = [
@@ -21,6 +22,7 @@ const handlers = [
   createImageHandler,
   resultsHandler,
   downloadMemeHandler,
+  deleteImageHandler,
   errorHandler
 ]
 
