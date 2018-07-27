@@ -5,6 +5,7 @@ const getDetailsHandler = require('./getDetails')
 const addMemeHandler = require('./addMeme')
 const addTagHandler = require('./addTag')
 const tagsHandler = require('./tags')
+const createImageHandler = require('./createImage')
 const downloadMemeHandler = require('./downloadMeme')
 const errorHandler = require('./error')
 
@@ -16,6 +17,7 @@ const handlers = [
   addMemeHandler,
   addTagHandler,
   tagsHandler,
+  createImageHandler,
   downloadMemeHandler,
   errorHandler
 ]
