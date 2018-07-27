@@ -3,8 +3,9 @@ const homeHandler = require('./home')
 const viewAllHandler = require('./viewAll')
 const getDetailsHandler = require('./getDetails')
 const addMemeHandler = require('./addMeme')
-const downloadMemeHandler = require('./downloadMeme')
 const addTagHandler = require('./addTag')
+const tagsHandler = require('./tags')
+const downloadMemeHandler = require('./downloadMeme')
 const errorHandler = require('./error')
 
 const handlers = [
@@ -14,6 +15,7 @@ const handlers = [
   getDetailsHandler,
   addMemeHandler,
   addTagHandler,
+  tagsHandler,
   downloadMemeHandler,
   errorHandler
 ]
