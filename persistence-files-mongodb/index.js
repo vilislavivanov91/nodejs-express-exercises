@@ -1,9 +1,10 @@
 const http = require('http')
 const handlers = require('./handlers')
-const MongoClient = require('mongodb').MongoClient
+// const MongoClient = require('mongodb').MongoClient
+const mongoose = require('mongoose')
 const url = require('url')
 const port = 4242
-const mongoUrl = 'mongodb://localhost:27017'
+const mongoUrl = 'mongodb://localhost:27017/mongooseTest'
 
 // MongoClient.connect(mongoUrl, (err, db) => {
 //   if (err) {
@@ -12,6 +13,16 @@ const mongoUrl = 'mongodb://localhost:27017'
 //     console.log(db)
 //   }
 // })
+
+mongoose.connect(mongoUrl)
+
+const db = mongoose.connection
+db.on('error', () => {
+  console.log('error conection')
+})
+db.once('open', () => {
+  console.log('connected!')
+})
 
 http.createServer((req, res) => {
   req.pathName = url.parse(req.url).pathname
@@ -22,12 +33,4 @@ http.createServer((req, res) => {
   }
 }).listen(port, () => {
   console.log(`App up and running at localhost:${port}`)
-  MongoClient.connect(mongoUrl, { useNewUrlParser: true }, (err, client) => {
-    if (err) {
-      console.log('err')
-    }
-    const db = client.db('projectName')
-    console.log('MOngo connected')
-    client.close()
-  })
 })
