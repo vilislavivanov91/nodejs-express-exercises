@@ -10,7 +10,7 @@ const tagSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  images: { type: Schema.Types.ObjectId, ref: 'Image' }
+  images: { type: [Schema.Types.ObjectId], ref: 'Image' }
 })
 
 tagSchema.methods.tagNameToLower = function () {
