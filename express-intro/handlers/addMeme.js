@@ -17,6 +17,9 @@ router.route('/addMeme')
       genres,
       statusHtml
     })
+  }).post((req, res) => {
+    console.log(req.body)
+    res.redirect('/')
   })
 
 module.exports = router
