@@ -4,8 +4,10 @@ require('./config/dbConfig')
 const app = express()
 const port = 2121
 
+app.use(express.static('public'))
+
 app.get('/', (req, res) => {
-  res.send('Hello from express')
+  res.send('')
 })
 
 app.listen(port, () => {
