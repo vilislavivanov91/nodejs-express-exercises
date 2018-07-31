@@ -3,6 +3,7 @@ const fieldChecker = require('../utility/fieldChecker')
 const formidable = require('formidable')
 const shortId = require('shortid')
 const fs = require('fs')
+const Meme = require('../model/Meme')
 
 const genres = [
   {
@@ -31,12 +32,30 @@ router.route('/addMeme')
       if (err) {
         console.log('err')
       } else {
+        console.log(fields)
         const fileOldPath = files.meme.path
+        const title = fields.memeTitle
+        const description = fields.memeDescription
+        const status = fields.status
+        // const genre = fields.genreSelect
         fs.access(destPath, (err) => {
           if (err) {
             fs.mkdirSync(destPath)
           }
           fs.rename(fileOldPath, fileNewPath, () => {})
+          const meme = new Meme({
+            title,
+            filePath: fileNewPath,
+            description,
+            status
+          })
+          meme.save(err => {
+            if (err) {
+              console.log(err)
+            } else {
+              console.log('meme saved')
+            }
+          })
         })
       }
     })
