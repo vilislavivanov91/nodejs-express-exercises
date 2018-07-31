@@ -1,4 +1,8 @@
 const router = require('express').Router()
+const fieldChecker = require('../utility/fieldChecker')
+const formidable = require('formidable')
+const shortId = require('shortid')
+const fs = require('fs')
 
 const genres = [
   {
@@ -18,7 +22,25 @@ router.route('/addMeme')
       statusHtml
     })
   }).post((req, res) => {
-    console.log(req.body)
+    const form = new formidable.IncomingForm()
+    const fileName = shortId.generate() + '.jpg'
+    const destPath = './public/memeStorage/0/'
+    const fileNewPath = destPath + fileName
+
+    form.parse(req, (err, fields, files) => {
+      if (err) {
+        console.log('err')
+      } else {
+        const fileOldPath = files.meme.path
+        fs.access(destPath, (err) => {
+          if (err) {
+            fs.mkdirSync(destPath)
+          }
+          fs.rename(fileOldPath, fileNewPath, () => {})
+        })
+      }
+    })
+
     res.redirect('/')
   })
 

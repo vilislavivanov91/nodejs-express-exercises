@@ -4,7 +4,7 @@ const port = 2121
 
 module.exports = (app, express) => {
   app.use(bodyParser.urlencoded({
-    extended: false
+    extended: true
   }))
 
   app.engine('hbs', handlebars({
