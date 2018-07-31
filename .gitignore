@@ -61,4 +61,4 @@ typings/
 .next
 
 # photos
-.jpg
+express-intro/public/memeStorage/**/*.jpg
