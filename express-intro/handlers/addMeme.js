@@ -13,7 +13,7 @@ const genres = [
     name: 'NotRickAndMorty'
   }
 ]
-const statusHtml = '<div id="errBox"><h2 id="errMsg">Please fill all fields</h2></div>'
+let statusHtml = ''
 // '<div id="succssesBox"><h2 id="succssesMsg">Movie Added</h2></div>'
 
 router.route('/addMeme')
@@ -32,35 +32,39 @@ router.route('/addMeme')
       if (err) {
         console.log('err')
       } else {
-        console.log(fields)
-        const fileOldPath = files.meme.path
-        const title = fields.memeTitle
-        const description = fields.memeDescription
-        const status = fields.status
-        // const genre = fields.genreSelect
-        fs.access(destPath, (err) => {
-          if (err) {
-            fs.mkdirSync(destPath)
-          }
-          fs.rename(fileOldPath, fileNewPath, () => {})
-          const meme = new Meme({
-            title,
-            filePath: fileNewPath,
-            description,
-            status
-          })
-          meme.save(err => {
+        if (files.meme.size === 0 || fieldChecker(fields)) {
+          statusHtml = '<div id="errBox"><h2 id="errMsg">Please fill all fields</h2></div>'
+          res.redirect('/addMeme')
+        } else {
+          const fileOldPath = files.meme.path
+          const title = fields.memeTitle
+          const description = fields.memeDescription
+          const status = fields.status
+          // const genre = fields.genreSelect
+          fs.access(destPath, (err) => {
             if (err) {
-              console.log(err)
-            } else {
-              console.log('meme saved')
+              fs.mkdirSync(destPath)
             }
+            fs.rename(fileOldPath, fileNewPath, () => {})
+            const meme = new Meme({
+              title,
+              filePath: fileNewPath,
+              description,
+              status
+            })
+            meme.save(err => {
+              if (err) {
+                console.log(err)
+                res.redirect('/addMeme')
+              } else {
+                statusHtml = '<div id="succssesBox"><h2 id="succssesMsg">Movie Added</h2></div>'
+                res.redirect('/addMeme')
+              }
+            })
           })
-        })
+        }
       }
     })
-
-    res.redirect('/')
   })
 
 module.exports = router
