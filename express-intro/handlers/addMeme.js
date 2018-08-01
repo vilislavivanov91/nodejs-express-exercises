@@ -4,23 +4,21 @@ const formidable = require('formidable')
 const shortId = require('shortid')
 const fs = require('fs')
 const Meme = require('../model/Meme')
+const Genre = require('../model/Genre')
 
-const genres = [
-  {
-    name: 'RickAndMorty'
-  },
-  {
-    name: 'NotRickAndMorty'
-  }
-]
 let uploadSucceed = null
 
 router.route('/addMeme')
   .get((req, res) => {
-    res.render('addMeme', {
-      genres,
-      uploadSucceed
-    })
+    Genre.find({})
+      .then(genres => {
+        res.render('addMeme', {
+          genres,
+          uploadSucceed
+        })
+      }).catch(err => {
+        res.send('error' + err)
+      })
   }).post((req, res) => {
     const form = new formidable.IncomingForm()
     const fileName = shortId.generate() + '.jpg'
@@ -39,6 +37,7 @@ router.route('/addMeme')
           const title = fields.memeTitle
           const description = fields.memeDescription
           const status = fields.status
+          const genreTitle = fields.genreSelect
           // const genre = fields.genreSelect
           fs.access(destPath, (err) => {
             if (err) {
@@ -56,6 +55,15 @@ router.route('/addMeme')
                 console.log(err)
                 res.redirect('/addMeme')
               } else {
+                Genre.find()
+                  .where('title')
+                  .equals(genreTitle)
+                  .then(genres => {
+                    const currentGenre = genres[0]
+                    currentGenre.memeArr.push(meme)
+                    currentGenre.save()
+                  })
+
                 uploadSucceed = true
                 res.redirect('/addMeme')
               }
