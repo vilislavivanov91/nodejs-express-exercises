@@ -55,7 +55,16 @@
         </form>
     </div>
     <div>
-         {{{statusHtml}}}
+        {{#if uploadSucceed}}
+            <div id="succssesBox">
+                <h2 id="succssesMsg">Movie Added</h2>
+            </div>
+        {{else}}
+            <div id="errBox">
+                <h2 id="errMsg">Please fill all fields</h2>
+            </div>
+        {{/if}}
+        {{!-- {{{statusHtml}}} --}}
     </div>
 </body>
 

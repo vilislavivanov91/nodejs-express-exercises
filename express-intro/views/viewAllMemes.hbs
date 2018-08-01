@@ -35,7 +35,12 @@
 
     <h1>Here are your memes</h1>
     <div class="container">
-        {{{allMemesHtml}}}
+        {{#each allMemes}}
+            <div class="meme">
+                <a href="/getDetails?id={{_id}}">
+                    <img class="memePoster" src="{{filePath}}" />
+            </div>
+        {{/each}}
     </div>
 </body>
 

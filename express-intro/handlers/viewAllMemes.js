@@ -3,19 +3,16 @@ const Meme = require('../model/Meme')
 
 router.route('/viewAllMemes')
   .get((req, res) => {
-    let allMemesHtml = ''
+    let allMemes = []
+
     Meme.find({})
       .sort([['creationDate', -1]])
       .then(memes => {
         memes.forEach(meme => {
-          allMemesHtml += `<div class="meme">
-  <a href="/getDetails?id=${meme._id}">
-  <img class="memePoster" src="${meme.filePath}"/>          
-  </div>
-  `
+          allMemes.push(meme)
         })
         res.render('viewAllMemes', {
-          allMemesHtml
+          allMemes
         })
       }).catch(() => {
         res.render('viewAllMemes')

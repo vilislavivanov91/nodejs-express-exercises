@@ -13,14 +13,13 @@ const genres = [
     name: 'NotRickAndMorty'
   }
 ]
-let statusHtml = ''
-// '<div id="succssesBox"><h2 id="succssesMsg">Movie Added</h2></div>'
+let uploadSucceed = null
 
 router.route('/addMeme')
   .get((req, res) => {
     res.render('addMeme', {
       genres,
-      statusHtml
+      uploadSucceed
     })
   }).post((req, res) => {
     const form = new formidable.IncomingForm()
@@ -33,7 +32,7 @@ router.route('/addMeme')
         console.log('err')
       } else {
         if (files.meme.size === 0 || fieldChecker(fields)) {
-          statusHtml = '<div id="errBox"><h2 id="errMsg">Please fill all fields</h2></div>'
+          uploadSucceed = false
           res.redirect('/addMeme')
         } else {
           const fileOldPath = files.meme.path
@@ -57,7 +56,7 @@ router.route('/addMeme')
                 console.log(err)
                 res.redirect('/addMeme')
               } else {
-                statusHtml = '<div id="succssesBox"><h2 id="succssesMsg">Movie Added</h2></div>'
+                uploadSucceed = true
                 res.redirect('/addMeme')
               }
             })
