@@ -22,7 +22,11 @@ router.route('/result')
               const memeTitle = meme.title
               const memeDesc = meme.description
 
-              if (memeTitle.indexOf(searchedString) !== -1 || memeDesc.indexOf(searchedString) !== -1) {
+              if (searchedString) {
+                if (memeTitle.indexOf(searchedString) !== -1 || memeDesc.indexOf(searchedString) !== -1) {
+                  searchedMemes.push(meme)
+                }
+              } else {
                 searchedMemes.push(meme)
               }
             })
@@ -30,8 +34,6 @@ router.route('/result')
       })
 
       Promise.all(promiseArr).then(() => {
-        console.log('here? - all')
-        console.log(searchedMemes)
         res.render('result', {
           resultMemes: searchedMemes
         })
