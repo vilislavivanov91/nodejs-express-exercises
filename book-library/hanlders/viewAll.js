@@ -3,7 +3,6 @@ const Book = require('../model/Book')
 
 router.route('/viewAll').get((req, res) => {
   Book.find({}).sort('yearRelease').then(books => {
-    console.log(books)
     res.render('viewAll', {
       books
     })
