@@ -3,3 +3,4 @@ const app = express()
 
 require('./config/appConfig')(app, express)
 require('./hanlders')(app)
+require('./config/dbConfig')
