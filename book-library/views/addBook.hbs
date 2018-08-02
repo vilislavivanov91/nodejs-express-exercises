@@ -1,1 +1,12 @@
 <h1>{{title}}</h1>
+<form action="/addBook" method="post">
+    title
+    <input type="text" name="title" id="title"> ulr
+    <input type="url" name="url" id="url"> year release
+    <input type="text" name="yearRelease" id="yearRelease"> author
+    <input type="text" name="author" id="author">
+    <input type="submit" value="Submit book">
+</form>
+{{#each errMessageArr}}
+    {{message}}
+{{/each}}
